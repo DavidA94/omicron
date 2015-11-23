@@ -8,17 +8,38 @@
     margin: auto;
 }
 
-#header{
-    font-size:2em;
+#header {
+    font-size: 2em;
 }
-#header p{margin:0;}
+
+    #header p {
+        margin: 0;
+    }
 
 #header, #footer {
-    background:#0075ca;
-    color:#ffaf62;
-    padding:0px 20px;
-    overflow:hidden;
+    background: #0075ca;
+    color: #ffaf62;
+    padding: 0px 20px;
+    overflow: hidden;
 }
 
-.hugeText{font-size:3em;}
-.red{color:red;}
+#adminTable {
+    margin: 10px;
+    border: solid black;
+    border-width: 1px 1px 0 0;
+}
+
+    #adminTable td, #adminTable th {
+        text-align: left;
+        padding: 2px 5px;
+        border: solid black;
+        border-width: 0 0 1px 1px;
+    }
+
+.hugeText {
+    font-size: 3em;
+}
+
+.red {
+    color: red;
+}

@@ -4,14 +4,21 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:39554/OmicronService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:39554/OmicronService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:39554/OmicronService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WebService" />
+      <xsd:import schemaLocation="http://localhost:39554/OmicronService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WebService.DataContracts" />
+      <xsd:import schemaLocation="http://localhost:39554/OmicronService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/WebService" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IOmicronService_GetData_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetData" />
+  <wsdl:message name="IOmicronService_GetUserData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserData" />
   </wsdl:message>
-  <wsdl:message name="IOmicronService_GetData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataResponse" />
+  <wsdl:message name="IOmicronService_GetUserData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOmicronService_logout_InputMessage">
+    <wsdl:part name="parameters" element="tns:logout" />
+  </wsdl:message>
+  <wsdl:message name="IOmicronService_logout_OutputMessage">
+    <wsdl:part name="parameters" element="tns:logoutResponse" />
   </wsdl:message>
   <wsdl:message name="IOmicronService_ValidUser_InputMessage">
     <wsdl:part name="parameters" element="tns:ValidUser" />
@@ -19,30 +26,33 @@
   <wsdl:message name="IOmicronService_ValidUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:ValidUserResponse" />
   </wsdl:message>
-  <wsdl:message name="IOmicronService_GetUserData_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetUserData" />
-  </wsdl:message>
-  <wsdl:message name="IOmicronService_GetUserData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetUserDataResponse" />
-  </wsdl:message>
   <wsdl:portType name="IOmicronService">
-    <wsdl:operation name="GetData">
-      <wsdl:input wsaw:Action="http://tempuri.org/IOmicronService/GetData" message="tns:IOmicronService_GetData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IOmicronService/GetDataResponse" message="tns:IOmicronService_GetData_OutputMessage" />
+    <wsdl:operation name="GetUserData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOmicronService/GetUserData" message="tns:IOmicronService_GetUserData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOmicronService/GetUserDataResponse" message="tns:IOmicronService_GetUserData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOmicronService/logout" message="tns:IOmicronService_logout_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOmicronService/logoutResponse" message="tns:IOmicronService_logout_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="ValidUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IOmicronService/ValidUser" message="tns:IOmicronService_ValidUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOmicronService/ValidUserResponse" message="tns:IOmicronService_ValidUser_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetUserData">
-      <wsdl:input wsaw:Action="http://tempuri.org/IOmicronService/GetUserData" message="tns:IOmicronService_GetUserData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IOmicronService/GetUserDataResponse" message="tns:IOmicronService_GetUserData_OutputMessage" />
-    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IOmicronService" type="tns:IOmicronService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetData">
-      <soap:operation soapAction="http://tempuri.org/IOmicronService/GetData" style="document" />
+    <wsdl:operation name="GetUserData">
+      <soap:operation soapAction="http://tempuri.org/IOmicronService/GetUserData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <soap:operation soapAction="http://tempuri.org/IOmicronService/logout" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -52,15 +62,6 @@
     </wsdl:operation>
     <wsdl:operation name="ValidUser">
       <soap:operation soapAction="http://tempuri.org/IOmicronService/ValidUser" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetUserData">
-      <soap:operation soapAction="http://tempuri.org/IOmicronService/GetUserData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -3,70 +3,50 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.Services;
+using WebService.DataContracts;
 
 namespace WebService
 {
+    /// <summary>
+    /// Indicates the type of user interacting with the system
+    /// </summary>
     public enum UserType { USER, ADMIN, INVALID }
 
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class OmicronService : IOmicronService
     {
+        #region Private Variables
+
+        /// <summary>
+        /// A connection to the Database.
+        /// </summary>
         private SqlConnection DbConnection = null;
 
-        public string GetData(int value)
-        {
-            return string.Format("You entered: {0}", value);
-        }
+        #endregion
 
-        public UserType ValidUser(string username, string password)
+        #region Public Methods
+
+        /// <summary>
+        /// Gets the data of one or more users.
+        /// </summary>
+        /// <param name="id">The ID of the user to get (below 0 for administrators)</param>
+        /// <param name="guid">The token of the user requesting the data</param>
+        /// <returns>An array of users' data, or null if an invalid use</returns>
+        public AppDataContract[] GetUserData(int id, Guid guid)
         {
             openConnection();
-            UserType userType;
 
-            SqlCommand checkUser = makeCommand("SELECT * FROM dbo.Users WHERE username=@user AND password=@pass",
-                new PreparedData(SqlDbType.VarChar, username, 15), 
-                new PreparedData(SqlDbType.VarChar,  password, 50));
+            List<AppDataContract> data = null;
+            UserToken user = getUserFromToken(guid);
 
-            using(SqlDataReader reader = checkUser.ExecuteReader())
+
+            if (user != null)
             {
-                // var session = HttpContext.Current.Session;
+                data = new List<AppDataContract>();
+                // Update that the user has made a request.
+                updateLastAccessed(guid);
 
-                if (reader.Read())
-                {
-                    //session[Constants.IS_ADMIN] = ((UserType)reader[Constants.USER_TYPE] == UserType.ADMIN);
-                    //session[Constants.USER_ID] = reader[Constants.ID];
-                    //session[Constants.VALID_USER] = true;
-
-                    userType = (UserType)reader[Constants.USER_TYPE];
-                }
-                else
-                {
-                    // session[Constants.VALID_USER] = false;
-                    userType = UserType.INVALID;
-                }
-            }
-
-            closeConnection();
-            return userType;
-        }
-
-        [WebMethod(EnableSession = true)]
-        public AppDataContract[] GetUserData(int id)
-        {
-            var session = HttpContext.Current.Session;
-            var data = new List<AppDataContract>();
-
-            if(true || (bool)session[Constants.VALID_USER])
-            {
-                if (id < 0 && true) //(bool)session["isAdmin"])
+                if (id < 0 && user.Type == UserType.ADMIN)
                 {
                     var getAll = makeCommand("SELECT Users.id, ssn, firstname, lastname, phone, date_submitted " +
                                              "FROM UserDatabase.dbo.Users " +
@@ -89,7 +69,7 @@ namespace WebService
                         }
                     }
                 }
-                else if (true || (int)session["userID"] == id)
+                else if (user.ID == id)
                 {
                     var getUser = makeCommand("SELECT ssn, firstname, lastname, phone, date_submitted " +
                                               "FROM UserDatabase.dbo.Users " +
@@ -114,32 +94,81 @@ namespace WebService
                 }
             }
 
+            closeConnection();
+
             return data.ToArray();
         }
 
-        private void openConnection()
+        /// <summary>
+        /// Logs a user out
+        /// </summary>
+        /// <param name="guid">The token of the user to log out.</param>
+        public void logout(Guid guid)
         {
-            if(DbConnection == null)
-            {
-                DbConnection = new SqlConnection("Data Source=(localdb)\\ProjectsV12;Initial Catalog=UserDatabase;Integrated Security=True;Pooling=False;Connect Timeout=3");
-                DbConnection.Open();
-            }
+            openConnection();
+
+            makeCommand("UPDATE dbo.UserTokens SET lastAccessed=@minTime WHERE GUID=@guid",
+                new PreparedData(SqlDbType.DateTime, DateTime.MinValue),
+                new PreparedData(SqlDbType.Char, guid.ToString(), Constants.GUID_LENGTH)).ExecuteNonQuery();
+
+            closeConnection();
         }
 
-        private void closeConnection()
+        /// <summary>
+        /// Checks if a user is valid based on their credentials
+        /// </summary>
+        /// <param name="username">The user's username</param>
+        /// <param name="password">The user's password</param>
+        /// <returns>A new ValidUserContract with a GUID to be used for further requests, or null if an invalid user.</returns>
+        public ValidUserContract ValidUser(string username, string password)
         {
-            if(DbConnection != null)
+            openConnection();
+            UserType userType;
+            int? userID = null;
+
+            SqlCommand checkUser = makeCommand("SELECT * FROM dbo.Users WHERE username=@user AND password=@pass",
+                new PreparedData(SqlDbType.VarChar, username, 15), 
+                new PreparedData(SqlDbType.VarChar,  password, 50));
+
+            using(SqlDataReader reader = checkUser.ExecuteReader())
             {
-                DbConnection.Close();
-                DbConnection = null;
+                if (reader.Read())
+                {
+                    userType = (UserType)reader[Constants.USER_TYPE];
+                    userID = (int?)reader[Constants.ID];
+                }
+                else
+                {
+                    userType = UserType.INVALID;
+                }
             }
+
+            var user = new ValidUserContract(userType);
+
+            if (userType != UserType.INVALID)
+            {
+                makeNewUser(user, userID);
+            }
+
+            closeConnection();
+            return user;
         }
 
+        #endregion
+
+        #region Database Helpers
+
+        /// <summary>
+        /// Creates a new Prepared SQL query to be run
+        /// </summary>
+        /// <param name="query">The query to be run</param>
+        /// <param name="data">The Prepared Data to be used in conjunction with the query</param>
+        /// <returns>A new SQL command ready to be executed.</returns>
         private SqlCommand makeCommand(string query, params PreparedData[] data)
         {
             openConnection();
 
-            if(query.LastOrDefault() != ';')
+            if (query.LastOrDefault() != ';')
             {
                 query += ";";
             }
@@ -147,12 +176,12 @@ namespace WebService
             SqlCommand pQuery = new SqlCommand(query, DbConnection);
 
             var markers = Regex.Matches(query, @"\@\w+");
-            if(markers.Count != data.Length)
+            if (markers.Count != data.Length)
             {
                 throw new ArgumentException("Number of data markers and data do not match");
             }
 
-            for(int i = 0; i < markers.Count; ++i)
+            for (int i = 0; i < markers.Count; ++i)
             {
                 if (data[i].Length > 0)
                 {
@@ -169,18 +198,92 @@ namespace WebService
 
             return pQuery;
         }
-    }
 
-    public class PreparedData
-    {
-        public PreparedData(SqlDbType type, object data, int length = -1)
+        #endregion
+
+        #region Database Management
+
+        /// <summary>
+        /// Opens a Database connection, if one has not been opened yet.
+        /// </summary>
+        private void openConnection()
         {
-            Type = type;
-            Data = data;
-            Length = length;
+            if (DbConnection == null)
+            {
+                DbConnection = new SqlConnection("Data Source=(localdb)\\ProjectsV12;Initial Catalog=UserDatabase;Integrated Security=True;Pooling=False;Connect Timeout=3");
+                DbConnection.Open();
+            }
         }
-        public SqlDbType Type { get; set; }
-        public object Data { get; set; }
-        public int Length { get; set; }
+
+        /// <summary>
+        /// Closes the database connection, if one is open.
+        /// </summary>
+        private void closeConnection()
+        {
+            if (DbConnection != null)
+            {
+                DbConnection.Close();
+                DbConnection = null;
+            }
+        }
+
+        #endregion
+
+        #region User Database Helpers
+        
+        /// <summary>
+        /// Updates a user so that their session won't timeout
+        /// </summary>
+        /// <param name="guid">The token of the user</param>
+        private void updateLastAccessed(Guid guid)
+        {
+            openConnection();
+
+            var updateUser = makeCommand("UPDATE dbo.UserTokens SET lastAccessed=GETDATE() WHERE GUID=@guid",
+                new PreparedData(SqlDbType.Char, guid.ToString(), Constants.GUID_LENGTH));
+        }
+
+        /// <summary>
+        /// Creates a new user in the tokens database.
+        /// </summary>
+        /// <param name="user">The user's data to be used</param>
+        /// <param name="userID">The ID of the user</param>
+        private void makeNewUser(ValidUserContract user, int? userID)
+        {
+            openConnection();
+
+            makeCommand("INSERT INTO dbo.UserTokens VALUES (@guid, GETDATE(), @type, @id)",
+                new PreparedData(SqlDbType.Char, user.GUID.ToString(), Constants.GUID_LENGTH),
+                new PreparedData(SqlDbType.Int, user.UserType),
+                new PreparedData(SqlDbType.Int, userID)).ExecuteNonQuery();
+        }
+
+        /// <summary>
+        /// Checks if a user is valid, based on their token (GUID)
+        /// </summary>
+        /// <param name="guid">The token for the user</param>
+        /// <returns>A new UserToken, or null if the user is not found</returns>
+        private UserToken getUserFromToken(Guid guid)
+        {
+            openConnection();
+
+            // Check if this is a valid user
+            var getUser = makeCommand("SELECT * FROM dbo.UserTokens WHERE GUID=@guid",
+                new PreparedData(SqlDbType.Char, guid.ToString(), Constants.GUID_LENGTH));
+
+            using (SqlDataReader reader = getUser.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    return new UserToken((string)reader[Constants.GUID], (DateTime)reader[Constants.LAST_ACCESSED],
+                        (UserType)reader[Constants.USER_TYPE], (int?)reader[Constants.USER_ID]);
+                }
+            }
+
+            return null;
+        }
+
+        #endregion
     }
+   
 }

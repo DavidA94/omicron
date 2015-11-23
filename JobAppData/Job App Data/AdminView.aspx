@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="TopContentPlaceHolder" runat="server">
     <div id="logout">
     </div>
-    <table id="adminTable">
+    <table id="adminTable" cellpadding="0" cellspacing="0" border="0">
         <tr>
             <th>SSN</th>
             <th>First Name</th>

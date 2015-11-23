@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
+using WebService.DataContracts;
 
 namespace WebService
 {
@@ -12,14 +8,30 @@ namespace WebService
     [ServiceContract]
     public interface IOmicronService
     {
-        [OperationContract]
-        string GetData(int value);
 
-        // TODO: Add your service operations here
+        /// <summary>
+        /// Gets the data of one or more users.
+        /// </summary>
+        /// <param name="id">The ID of the user to get (below 0 for administrators)</param>
+        /// <param name="guid">The token of the user requesting the data</param>
+        /// <returns>An array of users' data</returns>
         [OperationContract]
-        UserType ValidUser(string username, string password);
+        AppDataContract[] GetUserData(int id, Guid GUID);
 
+        /// <summary>
+        /// Logs a user out
+        /// </summary>
+        /// <param name="guid">The token of the user to log out.</param>
         [OperationContract]
-        AppDataContract[] GetUserData(int id);
+        void logout(Guid GUID);
+
+        /// <summary>
+        /// Checks if a user is valid based on their credentials
+        /// </summary>
+        /// <param name="username">The user's username</param>
+        /// <param name="password">The user's password</param>
+        /// <returns>A new ValidUserContract with a GUID to be used for further requests, or null if an invalid user.</returns>
+        [OperationContract]
+        ValidUserContract ValidUser(string username, string password);
     }
 }

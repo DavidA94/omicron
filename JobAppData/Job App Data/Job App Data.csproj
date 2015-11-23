@@ -72,10 +72,15 @@
     <Content Include="packages.config" />
     <Content Include="Main.Master" />
     <Content Include="Properties\DataSources\WebService.AppDataContract.datasource" />
+    <Content Include="Properties\DataSources\WebService.DataContracts.AppDataContract.datasource" />
+    <Content Include="Properties\DataSources\WebService.DataContracts.ValidUserContract.datasource" />
     <None Include="Service References\OmicronService\OmicronService.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\OmicronService\OmicronService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OmicronService\OmicronService3.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Web.Debug.config">

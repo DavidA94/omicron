@@ -15,23 +15,23 @@ namespace Job_App_Data.OmicronService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="OmicronService.IOmicronService")]
     public interface IOmicronService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOmicronService/GetData", ReplyAction="http://tempuri.org/IOmicronService/GetDataResponse")]
-        string GetData(int value);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOmicronService/GetData", ReplyAction="http://tempuri.org/IOmicronService/GetDataResponse")]
-        System.Threading.Tasks.Task<string> GetDataAsync(int value);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOmicronService/ValidUser", ReplyAction="http://tempuri.org/IOmicronService/ValidUserResponse")]
-        WebService.UserType ValidUser(string username, string password);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOmicronService/ValidUser", ReplyAction="http://tempuri.org/IOmicronService/ValidUserResponse")]
-        System.Threading.Tasks.Task<WebService.UserType> ValidUserAsync(string username, string password);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOmicronService/GetUserData", ReplyAction="http://tempuri.org/IOmicronService/GetUserDataResponse")]
+        WebService.DataContracts.AppDataContract[] GetUserData(int id, System.Guid GUID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOmicronService/GetUserData", ReplyAction="http://tempuri.org/IOmicronService/GetUserDataResponse")]
-        WebService.AppDataContract[] GetUserData(int id);
+        System.Threading.Tasks.Task<WebService.DataContracts.AppDataContract[]> GetUserDataAsync(int id, System.Guid GUID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOmicronService/GetUserData", ReplyAction="http://tempuri.org/IOmicronService/GetUserDataResponse")]
-        System.Threading.Tasks.Task<WebService.AppDataContract[]> GetUserDataAsync(int id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOmicronService/logout", ReplyAction="http://tempuri.org/IOmicronService/logoutResponse")]
+        void logout(System.Guid GUID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOmicronService/logout", ReplyAction="http://tempuri.org/IOmicronService/logoutResponse")]
+        System.Threading.Tasks.Task logoutAsync(System.Guid GUID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOmicronService/ValidUser", ReplyAction="http://tempuri.org/IOmicronService/ValidUserResponse")]
+        WebService.DataContracts.ValidUserContract ValidUser(string username, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOmicronService/ValidUser", ReplyAction="http://tempuri.org/IOmicronService/ValidUserResponse")]
+        System.Threading.Tasks.Task<WebService.DataContracts.ValidUserContract> ValidUserAsync(string username, string password);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -61,28 +61,28 @@ namespace Job_App_Data.OmicronService {
                 base(binding, remoteAddress) {
         }
         
-        public string GetData(int value) {
-            return base.Channel.GetData(value);
+        public WebService.DataContracts.AppDataContract[] GetUserData(int id, System.Guid GUID) {
+            return base.Channel.GetUserData(id, GUID);
         }
         
-        public System.Threading.Tasks.Task<string> GetDataAsync(int value) {
-            return base.Channel.GetDataAsync(value);
+        public System.Threading.Tasks.Task<WebService.DataContracts.AppDataContract[]> GetUserDataAsync(int id, System.Guid GUID) {
+            return base.Channel.GetUserDataAsync(id, GUID);
         }
         
-        public WebService.UserType ValidUser(string username, string password) {
+        public void logout(System.Guid GUID) {
+            base.Channel.logout(GUID);
+        }
+        
+        public System.Threading.Tasks.Task logoutAsync(System.Guid GUID) {
+            return base.Channel.logoutAsync(GUID);
+        }
+        
+        public WebService.DataContracts.ValidUserContract ValidUser(string username, string password) {
             return base.Channel.ValidUser(username, password);
         }
         
-        public System.Threading.Tasks.Task<WebService.UserType> ValidUserAsync(string username, string password) {
+        public System.Threading.Tasks.Task<WebService.DataContracts.ValidUserContract> ValidUserAsync(string username, string password) {
             return base.Channel.ValidUserAsync(username, password);
-        }
-        
-        public WebService.AppDataContract[] GetUserData(int id) {
-            return base.Channel.GetUserData(id);
-        }
-        
-        public System.Threading.Tasks.Task<WebService.AppDataContract[]> GetUserDataAsync(int id) {
-            return base.Channel.GetUserDataAsync(id);
         }
     }
 }
