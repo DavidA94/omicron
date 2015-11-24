@@ -69,10 +69,10 @@ namespace WebService
                         }
                     }
                 }
-                else if (user.ID == id)
+                else if (user.ID == id || user.Type == UserType.ADMIN)
                 {
                     var getUser = makeCommand("SELECT ssn, firstname, lastname, phone, date_submitted " +
-                                              "FROM UserDatabase.dbo.Users " +
+                                              "FROM UserDatabase.dbo.AppData " +
                                               "WHERE id = @userID",
                     /* ------------------- */ new PreparedData(SqlDbType.Int, id));
 
@@ -81,13 +81,13 @@ namespace WebService
                     {
                         if (reader.Read())
                         {
-                            data.Add(new AppDataContract((int)reader[Constants.ID],
+                            data.Add(new AppDataContract(id,
                                                          (string)reader[Constants.SSN],
                                                          (string)reader[Constants.FIRST_NAME],
                                                          (string)reader[Constants.LAST_NAME],
                                                          (string)reader[Constants.PHONE],
                                                          (DateTime)reader[Constants.DATE_SUB],
-                                                         true)
+                                                         user.Type != UserType.ADMIN)
                             );
                         }
                     }
@@ -143,7 +143,7 @@ namespace WebService
                 }
             }
 
-            var user = new ValidUserContract(userType);
+            var user = new ValidUserContract(userID, userType);
 
             if (userType != UserType.INVALID)
             {

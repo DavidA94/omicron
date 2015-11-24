@@ -64,7 +64,7 @@ namespace WebService.DataContracts
         /// The applicant's submission date
         /// </summary>
         [DataMember]
-        public DateTime DateSubmitted { get; set; }
+        public DateTime DateSubmitted { get; private set; }
 
         /// <summary>
         /// Indicates whether or not the data can be sent back and be changed.

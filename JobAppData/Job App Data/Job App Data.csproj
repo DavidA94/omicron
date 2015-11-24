@@ -101,6 +101,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="View.aspx" />
     <Content Include="Web.config" />
     <None Include="Service References\OmicronService\OmicronService.wsdl" />
     <None Include="Service References\OmicronService\OmicronService2.xsd">
@@ -137,6 +138,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="View.aspx.cs">
+      <DependentUpon>View.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View.aspx.designer.cs">
+      <DependentUpon>View.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

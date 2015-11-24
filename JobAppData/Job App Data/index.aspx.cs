@@ -21,17 +21,24 @@ namespace Job_App_Data
             // Get the user based of their credentials
             var user = service.ValidUser(LoginData.UserName, LoginData.Password);
 
+            // If an invalid user, we're done here.
+            if(user.UserType == UserType.INVALID)
+            {
+                return;
+            }
+
+            Session[Constants.USER_TOKEN] = user.GUID;
+            Session[Constants.IS_ADMIN] = user.UserType == UserType.ADMIN;
+
             // If they're an admin, then go to the admin view
             if (user.UserType == WebService.UserType.ADMIN)
             {
-                Session[Constants.USER_TOKEN] = user.GUID;
                 Response.Redirect("/AdminView.aspx");
             }
             // Otherwise, if they're a user, go to the user view
             else if(user.UserType == WebService.UserType.USER)
             {
-                Session[Constants.USER_TOKEN] = user.GUID;
-                // Go to user page
+                Response.Redirect("/View.aspx?id=" + user.ID);
             }
 
             // Otherwise, they'll be given an invalid login.

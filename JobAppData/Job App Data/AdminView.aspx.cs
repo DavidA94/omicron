@@ -16,7 +16,7 @@ namespace Job_App_Data
         protected void Page_Load(object sender, EventArgs e)
         {
             // If we don't have a valid session, then get out of here
-            if (!checkValidSession())
+            if (!validSession())
             {
                 return;
             }
@@ -44,7 +44,7 @@ namespace Job_App_Data
         protected void Logout_Click(object sender, EventArgs e)
         {
             // If we don't have a session to being with, then just go to the login page.
-            if (checkValidSession())
+            if (validSession())
             {
                 return;
             }
@@ -58,18 +58,12 @@ namespace Job_App_Data
             // And go to the login page.
             Response.Redirect("/");
         }
-
-        protected void ViewLink_Click(object sender, EventArgs e)
-        {
-            Session[Constants.ID] = Convert.ToInt32((sender as LinkButton).ID);
-            Response.Redirect("/ViewData.aspx");
-        }
-
+        
         /// <summary>
         /// Checks if we have a session token.
         /// </summary>
         /// <returns>True if there is a session token</returns>
-        private bool checkValidSession()
+        private bool validSession()
         {
             // If the user token isn't null
             if (Session[Constants.USER_TOKEN] == null)
