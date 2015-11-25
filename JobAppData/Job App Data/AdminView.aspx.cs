@@ -31,6 +31,7 @@ namespace Job_App_Data
             if(users == null)
             {
                 Response.Redirect("/");
+                return;
             }
 
             // Otherwise, fill up the table with the user's data.
@@ -44,7 +45,7 @@ namespace Job_App_Data
         protected void Logout_Click(object sender, EventArgs e)
         {
             // If we don't have a session to being with, then just go to the login page.
-            if (validSession())
+            if (!validSession())
             {
                 return;
             }

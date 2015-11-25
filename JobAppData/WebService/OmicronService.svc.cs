@@ -130,7 +130,7 @@ namespace WebService
                 new PreparedData(SqlDbType.VarChar, username, 15), 
                 new PreparedData(SqlDbType.VarChar,  password, 50));
 
-            using(SqlDataReader reader = checkUser.ExecuteReader())
+            using (SqlDataReader reader = checkUser.ExecuteReader())
             {
                 if (reader.Read())
                 {
