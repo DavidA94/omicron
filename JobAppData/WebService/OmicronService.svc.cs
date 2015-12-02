@@ -48,12 +48,24 @@ namespace WebService
 
                 if (id < 0 && user.Type == UserType.ADMIN)
                 {
-                    var getAll = makeCommand("SELECT Users.id, ssn, firstname, lastname, phone, date_submitted " +
+                    /* "SELECT Users.id, ssn, firstname, lastname, phone, date_submitted " +
                                              "FROM UserDatabase.dbo.Users " +
                                              "JOIN UserDatabase.dbo.AppData " +
                                              "ON UserDatabase.dbo.Users.id = UserDatabase.dbo.AppData.id " +
-                                             "WHERE UserType = @usertype;",
-                    /* ------------------ */ new PreparedData(SqlDbType.Int, (int)UserType.USER));
+                                             "WHERE UserType = @usertype;" */
+
+                    string getUserDataCommand = String.Format(
+                                             "SELECT {0}.{1}, {2}, {3}, {4}, {5}, {6} " +
+                                             "FROM {7}.dbo.{8} " +
+                                             "JOIN {9}.dbo.{10} " +
+                                             "ON {11}.dbo.{12}.id = {13}.dbo.{14}.id " +
+                                             "WHERE {15} = @usertype;",
+                                             Constants.USER_DB, Constants.ID, Constants.SSN, Constants.FIRST_NAME, Constants.LAST_NAME, Constants.PHONE, Constants.DATE_SUB,
+                                             Constants.DB, Constants.USER_DB, Constants.DB, Constants.APPDATA_DB,
+                                             Constants.DB, Constants.USER_DB, Constants.ID, Constants.DB, Constants.APPDATA_DB, Constants.ID,
+                                             Constants.USER_TYPE);
+
+                    var getAll = makeCommand(getUserDataCommand, new PreparedData(SqlDbType.Int, (int)UserType.USER));
 
                     using (SqlDataReader reader = getAll.ExecuteReader())
                     {
@@ -107,9 +119,9 @@ namespace WebService
         {
             openConnection();
 
-            makeCommand("UPDATE dbo.UserTokens SET lastAccessed=@minTime WHERE GUID=@guid",
-                new PreparedData(SqlDbType.DateTime, DateTime.MinValue),
-                new PreparedData(SqlDbType.Char, guid.ToString(), Constants.GUID_LENGTH)).ExecuteNonQuery();
+            makeCommand(String.Format("UPDATE dbo.{0} SET {1}=@minTime WHERE {2}=@guid", Constants.USER_TOKEN, Constants.LAST_ACCESSED, Constants.GUID),
+               new PreparedData(SqlDbType.DateTime, DateTime.MinValue),
+               new PreparedData(SqlDbType.Char, guid.ToString(), Constants.GUID_LENGTH)).ExecuteNonQuery();         
 
             closeConnection();
         }
@@ -126,7 +138,7 @@ namespace WebService
             UserType userType;
             int? userID = null;
 
-            SqlCommand checkUser = makeCommand("SELECT * FROM dbo.Users WHERE username=@user AND password=@pass",
+            SqlCommand checkUser = makeCommand(String.Format("SELECT * FROM dbo.{0} WHERE {1}=@user AND {2}=@pass", Constants.USER_DB, Constants.USERNAME, Constants.PASSWORD),
                 new PreparedData(SqlDbType.VarChar, username, 15), 
                 new PreparedData(SqlDbType.VarChar,  password, 50));
 
@@ -239,7 +251,7 @@ namespace WebService
         {
             openConnection();
 
-            var updateUser = makeCommand("UPDATE dbo.UserTokens SET lastAccessed=GETDATE() WHERE GUID=@guid",
+            var updateUser = makeCommand(String.Format("UPDATE dbo.{0) SET {1}=GETDATE() WHERE {2}=@guid", Constants.USER_TOKEN, Constants.LAST_ACCESSED, Constants.GUID),
                 new PreparedData(SqlDbType.Char, guid.ToString(), Constants.GUID_LENGTH));
         }
 
@@ -252,7 +264,7 @@ namespace WebService
         {
             openConnection();
 
-            makeCommand("INSERT INTO dbo.UserTokens VALUES (@guid, GETDATE(), @type, @id)",
+            makeCommand(String.Format("INSERT INTO dbo.{0} VALUES (@guid, GETDATE(), @type, @id)", Constants.USER_TOKEN),
                 new PreparedData(SqlDbType.Char, user.GUID.ToString(), Constants.GUID_LENGTH),
                 new PreparedData(SqlDbType.Int, user.UserType),
                 new PreparedData(SqlDbType.Int, userID)).ExecuteNonQuery();
@@ -268,7 +280,7 @@ namespace WebService
             openConnection();
 
             // Check if this is a valid user
-            var getUser = makeCommand("SELECT * FROM dbo.UserTokens WHERE GUID=@guid",
+            var getUser = makeCommand(String.Format("SELECT * FROM dbo.{0} WHERE {1}=@guid", Constants.USER_TOKEN, Constants.GUID),
                 new PreparedData(SqlDbType.Char, guid.ToString(), Constants.GUID_LENGTH));
 
             using (SqlDataReader reader = getUser.ExecuteReader())

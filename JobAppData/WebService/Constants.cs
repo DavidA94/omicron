@@ -33,6 +33,15 @@ namespace WebService
         public const int GUID_LENGTH = 36;
         public const string LAST_ACCESSED = "lastAccessed";
 
+        public const string DB = "UserDatabase";
+        public const string USER_DB = "Users";
+        public const string APPDATA_DB = "AppData";
+
+        public const string ADMIN_PAGE = "/AdminView.aspx";
+        public const string VIEW_PAGE_PARTIAL = "/View.aspx?id=";
+        public const string LOGIN_PAGE = "/"
+
+
         #endregion
 
 

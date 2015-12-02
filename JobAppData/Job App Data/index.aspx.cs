@@ -33,12 +33,12 @@ namespace Job_App_Data
             // If they're an admin, then go to the admin view
             if (user.UserType == WebService.UserType.ADMIN)
             {
-                Response.Redirect("/AdminView.aspx");
+                Response.Redirect(Constants.ADMIN_PAGE);
             }
             // Otherwise, if they're a user, go to the user view
             else if(user.UserType == WebService.UserType.USER)
             {
-                Response.Redirect("/View.aspx?id=" + user.ID);
+                Response.Redirect(Constants.VIEW_PAGE_PARTIAL + user.ID);
             }
 
             // Otherwise, they'll be given an invalid login.
