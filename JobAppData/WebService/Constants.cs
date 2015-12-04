@@ -18,6 +18,8 @@ namespace WebService
 
         #region DB
 
+        #region Columns
+
         public const string ID = "id";
         public const string SSN = "ssn";
         public const string FIRST_NAME = "firstname";
@@ -33,14 +35,23 @@ namespace WebService
         public const int GUID_LENGTH = 36;
         public const string LAST_ACCESSED = "lastAccessed";
 
-        public const string DB = "UserDatabase";
-        public const string USER_DB = "Users";
-        public const string APPDATA_DB = "AppData";
+        #endregion
+
+        #region Tables
+
+        public const string TABLE_APP_DATA = "UserDatabase.dbo.AppData";
+        public const string TABLE_USERS = "UserDatabase.dbo.Users";
+        public const string TABLE_USER_TOKENS = "UserDatabase.dbo.UserTokens";
+
+        #endregion
+
+        #endregion
+
+        #region Page URLs
 
         public const string ADMIN_PAGE = "/AdminView.aspx";
         public const string VIEW_PAGE_PARTIAL = "/View.aspx?id=";
-        public const string LOGIN_PAGE = "/"
-
+        public const string LOGIN_PAGE = "/";
 
         #endregion
 

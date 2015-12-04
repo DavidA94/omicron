@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="030be807-4a74-4374-8023-264878aaa0e6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:39554/OmicronService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="OmicronService.xsd" MetadataType="Schema" ID="ec7790f7-e8ff-482c-b635-db89cf11f8c6" SourceId="1" SourceUrl="http://localhost:39554/OmicronService.svc?xsd=xsd1" />
+    <MetadataFile FileName="OmicronService2.xsd" MetadataType="Schema" ID="c28a5209-f824-4cea-9875-49d65330dcad" SourceId="1" SourceUrl="http://localhost:39554/OmicronService.svc?xsd=xsd0" />
+    <MetadataFile FileName="OmicronService.disco" MetadataType="Disco" ID="e79934e2-3a4a-4185-8bb1-691ce1593b12" SourceId="1" SourceUrl="http://localhost:39554/OmicronService.svc?disco" />
+    <MetadataFile FileName="OmicronService1.xsd" MetadataType="Schema" ID="b0089fa9-37c4-44c4-9c37-09238ee150d2" SourceId="1" SourceUrl="http://localhost:39554/OmicronService.svc?xsd=xsd2" />
+    <MetadataFile FileName="OmicronService.wsdl" MetadataType="Wsdl" ID="c16e9f56-87ef-4c92-a6be-fd246d247daf" SourceId="1" SourceUrl="http://localhost:39554/OmicronService.svc?wsdl" />
+    <MetadataFile FileName="OmicronService3.xsd" MetadataType="Schema" ID="0dc78907-87e9-407c-9742-8a9cb929898b" SourceId="1" SourceUrl="http://localhost:39554/OmicronService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
