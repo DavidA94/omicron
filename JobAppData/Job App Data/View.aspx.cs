@@ -35,7 +35,7 @@ namespace Job_App_Data
 
         protected void returnAdminLink_Click(object sender, EventArgs e)
         {
-            Response.Redirect(Constants.ADMIN_PAGE);
+            Response.Redirect("/AdminView.aspx");
         }
 
         /// <summary>

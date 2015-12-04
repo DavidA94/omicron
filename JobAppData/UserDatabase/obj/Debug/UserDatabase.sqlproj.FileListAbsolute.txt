@@ -8,12 +8,3 @@ D:\Users\David\Documents\School\~OIT\CST 316 - Jr. Project I\Group Project\Omicr
 D:\Users\David\Documents\School\~OIT\CST 316 - Jr. Project I\Group Project\Omicron Project\JobAppData\UserDatabase\bin\Debug\UserDatabase.pdb
 D:\Users\David\Documents\School\~OIT\CST 316 - Jr. Project I\Group Project\Omicron Project\JobAppData\UserDatabase\obj\Debug\UserDatabase.dll
 D:\Users\David\Documents\School\~OIT\CST 316 - Jr. Project I\Group Project\Omicron Project\JobAppData\UserDatabase\obj\Debug\UserDatabase.pdb
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\UserDatabase\bin\Debug\UserDatabase.dacpac
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\UserDatabase\bin\Debug\UserDatabase.dll
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\UserDatabase\bin\Debug\UserDatabase.pdb
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\UserDatabase\obj\Debug\Model.xml
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\UserDatabase\obj\Debug\refactor.xml
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\UserDatabase\obj\Debug\postdeploy.sql
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\UserDatabase\obj\Debug\predeploy.sql
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\UserDatabase\obj\Debug\UserDatabase.dll
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\UserDatabase\obj\Debug\UserDatabase.pdb

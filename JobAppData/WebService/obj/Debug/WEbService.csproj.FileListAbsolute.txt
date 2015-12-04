@@ -14,11 +14,3 @@ D:\Users\David\Documents\School\~OIT\CST 316 - Jr. Project I\Group Project\Omicr
 D:\Users\David\Documents\School\~OIT\CST 316 - Jr. Project I\Group Project\Omicron Project\JobAppData\WebService\bin\UserDatabase.pdb
 D:\Users\David\Documents\School\~OIT\CST 316 - Jr. Project I\Group Project\Omicron Project\JobAppData\WebService\obj\Debug\WebService.dll
 D:\Users\David\Documents\School\~OIT\CST 316 - Jr. Project I\Group Project\Omicron Project\JobAppData\WebService\obj\Debug\WebService.pdb
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\WebService\bin\WebService.dll.config
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\WebService\bin\WebService.dll
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\WebService\bin\WebService.pdb
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\WebService\bin\UserDatabase.dll
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\WebService\bin\UserDatabase.pdb
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\WebService\obj\Debug\WebService.csprojResolveAssemblyReference.cache
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\WebService\obj\Debug\WebService.dll
-C:\Users\Hatim\Documents\GitHub\omicron\JobAppData\WebService\obj\Debug\WebService.pdb
