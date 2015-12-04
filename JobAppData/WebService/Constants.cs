@@ -35,7 +35,6 @@ namespace WebService
         public const int GUID_LENGTH = 36;
         public const string LAST_ACCESSED = "lastAccessed";
 
-<<<<<<< HEAD
         #endregion
 
         #region Tables
@@ -53,9 +52,7 @@ namespace WebService
         public const string ADMIN_PAGE = "/AdminView.aspx";
         public const string VIEW_PAGE_PARTIAL = "/View.aspx?id=";
         public const string LOGIN_PAGE = "/";
-
-=======
->>>>>>> parent of f30d19b... Constants Changes Done
+        
         #endregion
 
 

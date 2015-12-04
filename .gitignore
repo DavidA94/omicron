@@ -3,3 +3,5 @@
 *.cache
 *.zip
 *.exe
+debug/
+bin/

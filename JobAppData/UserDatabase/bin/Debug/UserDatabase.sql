@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "UserDatabase"
 :setvar DefaultFilePrefix "UserDatabase"
-:setvar DefaultDataPath "C:\Users\Hatim\AppData\Local\Microsoft\VisualStudio\SSDT\Job App Data"
-:setvar DefaultLogPath "C:\Users\Hatim\AppData\Local\Microsoft\VisualStudio\SSDT\Job App Data"
+:setvar DefaultDataPath "C:\Users\David\AppData\Local\Microsoft\VisualStudio\SSDT\Job App Data"
+:setvar DefaultLogPath "C:\Users\David\AppData\Local\Microsoft\VisualStudio\SSDT\Job App Data"
 
 GO
 :on error exit
