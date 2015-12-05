@@ -15,14 +15,23 @@ namespace Job_App_Data
         {
             if (!IsPostBack && validSession())
             {
-                int id = Convert.ToInt32(Request.QueryString[Constants.ID]);
-                var service = new OmicronService.OmicronServiceClient();
-                var userData = service.GetUserData(id, (Guid)Session[Constants.USER_TOKEN])[0];
+                try
+                {
+                    int id = Convert.ToInt32(Request.QueryString[Constants.ID]);
 
-                Title = (userData.FirstName + " " + userData.LastName + " Application");
+                    var service = new OmicronService.OmicronServiceClient();
+                    WebService.DataContracts.AppDataContract userData;
 
-                // We should only get one.
-                placeUserData(userData);
+                    userData = service.GetUserData(id, (Guid)Session[Constants.USER_TOKEN])[0];
+                    Title = (userData.FirstName + " " + userData.LastName + " Application");
+
+                    // We should only get one.
+                    placeUserData(userData);
+                }
+                catch
+                {
+                    Response.Redirect("/");
+                }
             }
         }
 
@@ -39,16 +48,15 @@ namespace Job_App_Data
                                                Phone.Text.Replace("-", ""), 
                                                DateTime.Today);
             var service = new OmicronService.OmicronServiceClient();
-            bool userOkay = service.ChangeUserData(userData, (Guid)Session[Constants.USER_TOKEN]);
 
-            if (userOkay)
+            try
             {
-                Response.Redirect(Constants.VIEW_PAGE_PARTIAL + id);
+                service.ChangeUserData(userData, (Guid)Session[Constants.USER_TOKEN]);
             }
-            else
-            {
-                Response.Redirect(Constants.LOGIN_PAGE);
-            }
+            catch{}
+
+            Response.Redirect(Constants.VIEW_PAGE_PARTIAL + id);
+
         }
 
         protected void returnAdminLink_Click(object sender, EventArgs e)
