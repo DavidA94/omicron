@@ -1,8 +1,5 @@
-!packages/*.dll
-*.dll
 *.pdb
 *.cache
 *.zip
-*.exe
 debug/
 bin/
