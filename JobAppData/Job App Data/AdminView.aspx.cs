@@ -30,7 +30,7 @@ namespace Job_App_Data
             // If this is null, then we aren't authorized to be here, so let's leave.
             if(users == null)
             {
-                Response.Redirect("/");
+                Response.Redirect(Constants.LOGIN_PAGE);
                 return;
             }
 
@@ -49,7 +49,7 @@ namespace Job_App_Data
             if (Session[Constants.USER_TOKEN] == null)
             {
                 // Set the redirect and return that we don't have a valid token
-                Response.Redirect("/");
+                Response.Redirect(Constants.LOGIN_PAGE);
                 return false;
             }
 
