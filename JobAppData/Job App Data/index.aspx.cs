@@ -18,8 +18,17 @@ namespace Job_App_Data
             // Open a connection to the service
             var service = new OmicronService.OmicronServiceClient();
 
+            WebService.DataContracts.ValidUserContract user;
+
             // Get the user based of their credentials
-            var user = service.ValidUser(LoginData.UserName, LoginData.Password);
+            try
+            {
+                user = service.ValidUser(LoginData.UserName, LoginData.Password);
+            }
+            catch
+            {
+                return;
+            }
 
             // If an invalid user, we're done here.
             if(user.UserType == UserType.INVALID)
