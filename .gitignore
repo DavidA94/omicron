@@ -1,4 +1,4 @@
-!JobAppData/packages/
+!JobAppData/packages
 *.dll
 *.pdb
 *.cache
