@@ -140,7 +140,7 @@ namespace WebService
                                       Constants.TABLE_USER_TOKENS,
                                       Constants.LAST_ACCESSED,
                                       Constants.GUID),
-                        new PreparedData(SqlDbType.DateTime, DateTime.MinValue),
+                        new PreparedData(SqlDbType.DateTime, new DateTime(1973, 1, 1)),
                         new PreparedData(SqlDbType.Char, guid.ToString(), Constants.GUID_LENGTH)).ExecuteNonQuery();
 
             closeConnection();
@@ -171,7 +171,7 @@ namespace WebService
                                       Constants.ID),
                             new PreparedData(SqlDbType.VarChar, userData.FirstName, 50),
                             new PreparedData(SqlDbType.VarChar, userData.LastName, 50),
-                            new PreparedData(SqlDbType.Char, userData.Phone, 10),
+                            new PreparedData(SqlDbType.Char, userData.Phone.Replace("-", ""), 10),
                             new PreparedData(SqlDbType.Int, userData.ID)
                 ).ExecuteNonQuery();
 

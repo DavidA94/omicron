@@ -27,8 +27,8 @@
     margin: 10px;
     border: solid black;
     border-width: 1px 1px 0 0;
-    border-spacing:0;
-    border-collapse:collapse;
+    border-spacing: 0;
+    border-collapse: collapse;
 }
 
     #adminTable td, #adminTable th {
@@ -37,6 +37,10 @@
         border: solid black;
         border-width: 0 0 1px 1px;
     }
+
+#logout {
+    text-align: right;
+}
 
 .hugeText {
     font-size: 3em;

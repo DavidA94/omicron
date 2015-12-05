@@ -3,8 +3,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="TopContentPlaceHolder" runat="server">
-    <div id="logout">
-    </div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="FormContentPlaceHolder" runat="server">
+    <form runat="server">
+        <div id="logout">
+            <asp:LinkButton runat="server" ID="LogoutButton" OnClick="LogoutButton_Click" Text="Logout" />
+        </div>
+    </form>
+</asp:Content>
+<asp:Content ID="Content4" ContentPlaceHolderID="BottomContentPlaceHolder" runat="server">
     <table id="adminTable">
         <tr>
             <th>SSN</th>
@@ -29,8 +36,4 @@
             </ItemTemplate>
         </asp:Repeater>
     </table>
-</asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="FormContentPlaceHolder" runat="server">
-</asp:Content>
-<asp:Content ID="Content4" ContentPlaceHolderID="BottomContentPlaceHolder" runat="server">
 </asp:Content>

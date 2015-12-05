@@ -19,7 +19,7 @@ namespace Job_App_Data
                 var service = new OmicronService.OmicronServiceClient();
                 var userData = service.GetUserData(id, (Guid)Session[Constants.USER_TOKEN])[0];
 
-                Title = userData.FirstName + " " + userData.LastName + " Application";
+                Title = (userData.FirstName + " " + userData.LastName + " Application");
 
                 // We should only get one.
                 placeUserData(userData);
@@ -117,6 +117,27 @@ namespace Job_App_Data
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Called when the logout button is clicked.
+        /// </summary>
+        protected void LogoutButton_Click(object sender, EventArgs e)
+        {
+            // If we don't have a session to being with, then just go to the login page.
+            if (!validSession())
+            {
+                return;
+            }
+
+            // Otherwise, tell the web service we are logging out
+            (new OmicronService.OmicronServiceClient()).logout((Guid)Session[Constants.USER_TOKEN]);
+
+            // Clear the sesison
+            Session[Constants.USER_TOKEN] = null;
+
+            // And go to the login page.
+            Response.Redirect("/");
         }
     }
 }

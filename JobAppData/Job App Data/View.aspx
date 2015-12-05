@@ -1,10 +1,14 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="View.aspx.cs" Inherits="Job_App_Data.View" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="View.aspx.cs" Inherits="Job_App_Data.View" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="TopContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FormContentPlaceHolder" runat="server">
     <form id="viewForm" runat="server">
+        <div id="logout">
+            <asp:LinkButton runat="server" ID="LogoutButton" OnClick="LogoutButton_Click" Text="Logout" />
+        </div>
+
         <table>
             <tr>
                 <td>SSN:</td>
