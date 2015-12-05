@@ -136,7 +136,7 @@ namespace WebService
         {
             openConnection();
 
-            makeCommand(string.Format("UPDATE dbo.{0} SET {1}=@minTime WHERE {2}=@guid",
+            makeCommand(string.Format("UPDATE {0} SET {1}=@minTime WHERE {2}=@guid",
                                       Constants.TABLE_USER_TOKENS,
                                       Constants.LAST_ACCESSED,
                                       Constants.GUID),

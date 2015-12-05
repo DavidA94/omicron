@@ -48,7 +48,7 @@ namespace Job_App_Data
             if (Session[Constants.USER_TOKEN] == null)
             {
                 // Set the redirect and return that we don't have a valid token
-                Response.Redirect("/");
+                Response.Redirect(Constants.LOGIN_PAGE);
                 return false;
             }
 
