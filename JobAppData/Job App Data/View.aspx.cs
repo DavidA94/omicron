@@ -49,19 +49,30 @@ namespace Job_App_Data
                                                DateTime.Today);
             var service = new OmicronService.OmicronServiceClient();
 
+            bool userOkay = false;
+
             try
             {
-                service.ChangeUserData(userData, (Guid)Session[Constants.USER_TOKEN]);
+                userOkay = service.ChangeUserData(userData, (Guid)Session[Constants.USER_TOKEN]);
             }
-            catch{}
+            catch
+            {
+                Response.Redirect(Constants.LOGIN_PAGE);
+            }
 
-            Response.Redirect(Constants.VIEW_PAGE_PARTIAL + id);
-
+            if (userOkay)
+            {
+                Response.Redirect(Constants.VIEW_PAGE_PARTIAL + id);
+            }
+            else
+            {
+                Response.Redirect(Constants.LOGIN_PAGE);
+            }
         }
 
         protected void returnAdminLink_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/AdminView.aspx");
+            Response.Redirect(Constants.ADMIN_PAGE);
         }
 
         /// <summary>
