@@ -1,3 +1,4 @@
+!"Omicron Project/JobAppData/packages/*"
 *.dll
 *.pdb
 *.cache
@@ -5,4 +6,3 @@
 *.exe
 debug/
 bin/
-!"Omicron Project/JobAppData/packages/*"
