@@ -1,3 +1,4 @@
+!packages/*.dll
 *.dll
 *.pdb
 *.cache
@@ -5,4 +6,3 @@
 *.exe
 debug/
 bin/
-!packages/*.dll
