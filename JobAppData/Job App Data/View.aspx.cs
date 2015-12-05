@@ -13,24 +13,42 @@ namespace Job_App_Data
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!validSession())
+            if (!IsPostBack && validSession())
             {
-                return;
+                int id = Convert.ToInt32(Request.QueryString[Constants.ID]);
+                var service = new OmicronService.OmicronServiceClient();
+                var userData = service.GetUserData(id, (Guid)Session[Constants.USER_TOKEN])[0];
+
+                Title = userData.FirstName + " " + userData.LastName + " Application";
+
+                // We should only get one.
+                placeUserData(userData);
             }
-
-            int id = Convert.ToInt32(Request.QueryString[Constants.ID]);
-            var service = new OmicronService.OmicronServiceClient();
-            var userData = service.GetUserData(id, (Guid)Session[Constants.USER_TOKEN])[0];
-
-            Title = userData.FirstName + " " + userData.LastName + " Application";
-
-            // We should only get one.
-            placeUserData(userData);
         }
 
+        /// <summary>
+        /// Called when the Update button is clicked by the user
+        /// </summary>
         protected void saveUserDetailsButton_Click(object sender, EventArgs e)
         {
+            int id = Convert.ToInt32(Request.QueryString[Constants.ID]);
+            var userData = new AppDataContract(id, 
+                                               SSN.Text, 
+                                               FirstName.Text, 
+                                               LastName.Text, 
+                                               Phone.Text.Replace("-", ""), 
+                                               DateTime.Today);
+            var service = new OmicronService.OmicronServiceClient();
+            bool userOkay = service.ChangeUserData(userData, (Guid)Session[Constants.USER_TOKEN]);
 
+            if (userOkay)
+            {
+                Response.Redirect(Constants.VIEW_PAGE_PARTIAL + id);
+            }
+            else
+            {
+                Response.Redirect(Constants.LOGIN_PAGE);
+            }
         }
 
         protected void returnAdminLink_Click(object sender, EventArgs e)

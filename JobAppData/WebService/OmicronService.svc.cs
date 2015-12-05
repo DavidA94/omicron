@@ -147,6 +147,43 @@ namespace WebService
         }
 
         /// <summary>
+        /// Changes the users data with the new data.
+        /// </summary>
+        /// <param name="userData">The updated data</param>
+        /// <param name="GUID">The user token to authenticate this action</param>
+        /// <returns>True if the user was updated</returns>
+        public bool ChangeUserData(AppDataContract userData, Guid GUID)
+        {
+            UserToken user = getUserFromToken(GUID);
+
+            if (user.Type == UserType.USER && user.ID == userData.ID)
+            {
+                openConnection();
+
+
+                makeCommand(string.Format("UPDATE {0} " +
+                                      "SET {1}=@firstName, {2}=@lastName, {3}=@phone " +
+                                      "WHERE {4}=@userId",
+                                      Constants.TABLE_APP_DATA,
+                                      Constants.FIRST_NAME,
+                                      Constants.LAST_NAME,
+                                      Constants.PHONE,
+                                      Constants.ID),
+                            new PreparedData(SqlDbType.VarChar, userData.FirstName, 50),
+                            new PreparedData(SqlDbType.VarChar, userData.LastName, 50),
+                            new PreparedData(SqlDbType.Char, userData.Phone, 10),
+                            new PreparedData(SqlDbType.Int, userData.ID)
+                ).ExecuteNonQuery();
+
+                closeConnection();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Checks if a user is valid based on their credentials
         /// </summary>
         /// <param name="username">The user's username</param>
@@ -289,7 +326,7 @@ namespace WebService
         private void makeNewUser(ValidUserContract user, int? userID)
         {
             openConnection();
-            
+
             makeCommand(string.Format("INSERT INTO {0} VALUES (@guid, GETDATE(), @type, @id)", Constants.TABLE_USER_TOKENS),
                                       new PreparedData(SqlDbType.Char, user.GUID.ToString(), Constants.GUID_LENGTH),
                                       new PreparedData(SqlDbType.Int, user.UserType),

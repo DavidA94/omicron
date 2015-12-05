@@ -32,6 +32,12 @@ namespace Job_App_Data.OmicronService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOmicronService/ValidUser", ReplyAction="http://tempuri.org/IOmicronService/ValidUserResponse")]
         System.Threading.Tasks.Task<WebService.DataContracts.ValidUserContract> ValidUserAsync(string username, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOmicronService/ChangeUserData", ReplyAction="http://tempuri.org/IOmicronService/ChangeUserDataResponse")]
+        bool ChangeUserData(WebService.DataContracts.AppDataContract userData, System.Guid GUID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOmicronService/ChangeUserData", ReplyAction="http://tempuri.org/IOmicronService/ChangeUserDataResponse")]
+        System.Threading.Tasks.Task<bool> ChangeUserDataAsync(WebService.DataContracts.AppDataContract userData, System.Guid GUID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -83,6 +89,14 @@ namespace Job_App_Data.OmicronService {
         
         public System.Threading.Tasks.Task<WebService.DataContracts.ValidUserContract> ValidUserAsync(string username, string password) {
             return base.Channel.ValidUserAsync(username, password);
+        }
+        
+        public bool ChangeUserData(WebService.DataContracts.AppDataContract userData, System.Guid GUID) {
+            return base.Channel.ChangeUserData(userData, GUID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ChangeUserDataAsync(WebService.DataContracts.AppDataContract userData, System.Guid GUID) {
+            return base.Channel.ChangeUserDataAsync(userData, GUID);
         }
     }
 }

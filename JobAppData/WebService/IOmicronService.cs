@@ -33,5 +33,14 @@ namespace WebService
         /// <returns>A new ValidUserContract with a GUID to be used for further requests, or null if an invalid user.</returns>
         [OperationContract]
         ValidUserContract ValidUser(string username, string password);
+
+        /// <summary>
+        /// Changes the users data with the new data.
+        /// </summary>
+        /// <param name="userData">The updated data</param>
+        /// <param name="GUID">The user token to authenticate this action</param>
+        /// <returns>True if the user was updated</returns>
+        [OperationContract]
+        bool ChangeUserData(AppDataContract userData, Guid GUID);
     }
 }

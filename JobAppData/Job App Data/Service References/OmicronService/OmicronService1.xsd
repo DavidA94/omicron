@@ -23,6 +23,7 @@
   <xs:complexType name="ValidUserContract">
     <xs:sequence>
       <xs:element minOccurs="0" name="GUID" type="ser:guid" />
+      <xs:element minOccurs="0" name="ID" nillable="true" type="xs:int" />
       <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/WebService" minOccurs="0" name="UserType" type="q1:UserType" />
     </xs:sequence>
   </xs:complexType>
